@@ -3,7 +3,7 @@
  * регистрацией пользователя из приложения
  * Имеет свойство URL, равное '/user'.
  * */
-class User {
+ class User {
   /**
    * Устанавливает текущего пользователя в
    * локальном хранилище.
@@ -34,7 +34,7 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch(callback) {
-    createRequest ({
+    createRequest({
       url: this.URL + '/current',
       method: 'GET',
       callback: (err, response) => {
@@ -43,11 +43,11 @@ class User {
         } else {
           this.unsetCurrent();
         }
+
         callback(err, response);
       }
     });
-
-    }
+  }
 
   /**
    * Производит попытку авторизации.
@@ -57,9 +57,8 @@ class User {
    * */
   static login(data, callback) {
     createRequest({
-      url: this.URL + '/login',
+      url: this.URL + "/login",
       method: 'POST',
-      responseType: 'json',
       data,
       callback: (err, response) => {
         if (response && response.user) {
@@ -94,10 +93,11 @@ class User {
    * Производит выход из приложения. После успешного
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
-  static logout(callback) {
+  static logout(data, callback) {
     createRequest({
       url: this.URL + '/logout',
       method: 'POST',
+      data,
       callback: (err, response) => {
         if (response && response.user) {
           this.unsetCurrent();
